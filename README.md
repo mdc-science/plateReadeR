@@ -1,5 +1,7 @@
 # Plate Reader Endpoint Assay Workflow
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21933797.svg)](https://doi.org/10.5281/zenodo.21933797)
+
 **Author:** Daniel Moreira ([danielcarmor@gmail.com](mailto:danielcarmor@gmail.com))  
 **Institution:** i3S – Instituto de Investigação e Inovação em Saúde, Porto, Portugal   
 **Language:** R  
@@ -169,6 +171,12 @@ library(ggforce)
 library(ggthemes)
 library(readxl)   # Synergy2 script only
 ```
+
+---
+
+## Citing this workflow
+
+If you use this workflow, please cite it — see [`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this repository" button from it), or use the DOI directly: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797). That DOI always resolves to the latest version; the citable snapshot of v1.0.0 specifically is [10.5281/zenodo.21933798](https://doi.org/10.5281/zenodo.21933798).
 
 ---
 

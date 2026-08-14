@@ -16,6 +16,10 @@
       "name": "Plate Reader Endpoint Assay Workflow",
       "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays (BCA, DTNB, ABTS, Amplex Red) from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2), subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
       "datePublished": "2026-08-14",
+      "identifier": [
+        { "@id": "https://doi.org/10.5281/zenodo.21933797" },
+        { "@id": "https://doi.org/10.5281/zenodo.21933798" }
+      ],
       "license": { "@id": "https://opensource.org/license/mit" },
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "author": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
@@ -36,6 +40,7 @@
         { "@id": "process_synergy2_endpoint_std_curve.R" },
         { "@id": "README.md" },
         { "@id": "CITATION.cff" },
+        { "@id": "CHANGELOG.md" },
         { "@id": "LICENSE" },
         { "@id": "examples/BCA_assay_metadata.csv" },
         { "@id": "examples/AmplexRed_assay_metadata.csv" },
@@ -96,6 +101,20 @@
       "url": "https://opensource.org/license/mit"
     },
     {
+      "@id": "https://doi.org/10.5281/zenodo.21933797",
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.5281/zenodo.21933797",
+      "name": "Concept DOI (resolves to the latest version)"
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.21933798",
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.5281/zenodo.21933798",
+      "name": "Version DOI (v1.0.0)"
+    },
+    {
       "@id": "README.md",
       "@type": "File",
       "name": "README",
@@ -106,6 +125,12 @@
       "@type": "File",
       "name": "Citation metadata",
       "encodingFormat": "application/yaml"
+    },
+    {
+      "@id": "CHANGELOG.md",
+      "@type": "File",
+      "name": "Changelog",
+      "encodingFormat": "text/markdown"
     },
     {
       "@id": "LICENSE",

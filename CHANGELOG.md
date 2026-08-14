@@ -6,7 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); ver
 
 ## [1.0.0] - 2026-08-14
 
-First citable release.
+First citable release. DOI: [10.5281/zenodo.21933798](https://doi.org/10.5281/zenodo.21933798) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).
 
 ### Added
 - `process_spectramax_endpoint_std_curve.R` — endpoint colorimetric/fluorescence assay pipeline for SpectraMax iD3 exports (CSV/XLS/TXT), with instrument read-mode and wavelength auto-detection.
