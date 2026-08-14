@@ -15,4 +15,4 @@ First citable release. DOI: [10.5281/zenodo.21933798](https://doi.org/10.5281/ze
 - Out-of-range sample handling: back-calculated via the standard curve and flagged `extrapolated = TRUE` rather than dropped.
 - `smp_blk` well type for matrix-matched sample blanks, subtracted per `sample_ID` before back-calculation.
 - Two runnable, fabricated examples: `examples/example_run/` (BCA, absorbance) and `examples/example_run_amplexred/` (Amplex Red H2O2, fluorescence — also demonstrating `smp_blk` and extrapolation flagging).
-- `CITATION.cff` and `ro-crate-metadata.json` for citation and WorkflowHub indexing.
+- `CITATION.cff` and `ro-crate-metadata.json` for citation metadata (the latter conforms to the Workflow RO-Crate profile).
