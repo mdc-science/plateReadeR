@@ -12,6 +12,9 @@ authors:
 repository-code: "https://github.com/mdc-science/plateReadeR"
 identifiers:
   - type: doi
+    value: "10.5281/zenodo.21937604"
+    description: "The version-specific DOI for v1.1.0 of this workflow."
+  - type: doi
     value: "10.5281/zenodo.21933798"
     description: "The version-specific DOI for v1.0.0 of this workflow."
   - type: doi

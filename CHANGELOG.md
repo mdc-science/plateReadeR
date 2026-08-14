@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); ver
 
 ## [1.1.0] - 2026-08-14
 
+DOI: [10.5281/zenodo.21937604](https://doi.org/10.5281/zenodo.21937604) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).
+
 ### Added
 - `process_generic_excel_endpoint_std_curve.R` — reads a user-prepared `.xlsx` file instead of an instrument-specific export, for use with any plate reader. Auto-detects a long format (single sheet, columns `well`/`wavelength`/`signal`) or a plate format (one 8x12-grid sheet per wavelength) from the first sheet's cell A1; supports multi-wavelength signal formulas in both.
 - `examples/example_run_generic_excel/` — runnable example encoding the same fabricated two-wavelength assay data in both formats and asserting they back-calculate to identical results.

@@ -18,7 +18,8 @@
       "datePublished": "2026-08-14",
       "identifier": [
         { "@id": "https://doi.org/10.5281/zenodo.21933797" },
-        { "@id": "https://doi.org/10.5281/zenodo.21933798" }
+        { "@id": "https://doi.org/10.5281/zenodo.21933798" },
+        { "@id": "https://doi.org/10.5281/zenodo.21937604" }
       ],
       "license": { "@id": "https://opensource.org/license/mit" },
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
@@ -132,6 +133,13 @@
       "propertyID": "DOI",
       "value": "10.5281/zenodo.21933798",
       "name": "Version DOI (v1.0.0)"
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.21937604",
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.5281/zenodo.21937604",
+      "name": "Version DOI (v1.1.0)"
     },
     {
       "@id": "README.md",

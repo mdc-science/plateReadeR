@@ -252,7 +252,7 @@ library(readxl)   # Synergy2 and generic-Excel scripts only
 
 ## Citing this workflow
 
-If you use this workflow, please cite it — see [`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this repository" button from it), or use the DOI directly: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797). That DOI always resolves to the latest version; the citable snapshot of v1.0.0 specifically is [10.5281/zenodo.21933798](https://doi.org/10.5281/zenodo.21933798).
+If you use this workflow, please cite it — see [`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this repository" button from it), or use the DOI directly: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797). That DOI always resolves to the latest version; the citable snapshot of v1.1.0 specifically is [10.5281/zenodo.21937604](https://doi.org/10.5281/zenodo.21937604) (v1.0.0: [10.5281/zenodo.21933798](https://doi.org/10.5281/zenodo.21933798)).
 
 ---
 
