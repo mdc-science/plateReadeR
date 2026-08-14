@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this workflow, please cite it as below."
+title: "Plate Reader Endpoint Assay Workflow"
+type: software
+version: 1.0.0
+date-released: "2026-08-14"
+authors:
+  - family-names: Moreira
+    given-names: Daniel
+    orcid: "https://orcid.org/0000-0003-1961-7281"
+    affiliation: "i3S – Instituto de Investigação e Inovação em Saúde, Porto, Portugal"
+repository-code: "https://github.com/mdc-science/plateReadeR"
+license: MIT
+keywords:
+  - plate-reader
+  - microplate
+  - colorimetric-assay
+  - fluorescence-assay
+  - BCA
+  - Amplex Red
+  - standard-curve
+  - R
