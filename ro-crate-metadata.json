@@ -58,7 +58,7 @@
       "@id": "process_spectramax_endpoint_std_curve.R",
       "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
       "name": "SpectraMax endpoint assay pipeline",
-      "description": "Parses SpectraMax iD3 SDA endpoint-assay exports (.csv, .xls, or .txt), auto-detecting absorbance vs. fluorescence read mode and the measured wavelength(s), including multi-wavelength absorbance exports. Subtracts blank signal, evaluates the assay's signal formula, fits a linear standard curve, and back-calculates sample concentrations. See examples/example_run/ (BCA, absorbance), examples/example_run_amplexred/ (Amplex Red H2O2, fluorescence), and examples/example_run_bradford_legacy/ (real two-wavelength Bradford data) for runnable demonstrations.",
+      "description": "Parses SpectraMax iD3 SDA endpoint-assay exports (.csv, .xls, or .txt), auto-detecting absorbance vs. fluorescence read mode and the measured wavelength(s), including multi-wavelength absorbance exports. Subtracts blank signal, evaluates the assay's signal formula, fits a linear standard curve, and back-calculates sample concentrations. See examples/example_run_amplexred/ (Amplex Red H2O2, fluorescence) and examples/example_run_bradford_legacy/ (real two-wavelength Bradford data) for runnable demonstrations.",
       "programmingLanguage": { "@id": "https://www.r-project.org" },
       "encodingFormat": "text/x-r-source",
       "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_spectramax_endpoint_std_curve.R",
@@ -70,7 +70,7 @@
       "@id": "process_synergy2_endpoint_std_curve.R",
       "@type": ["File", "SoftwareSourceCode"],
       "name": "BioTek Synergy 2 endpoint assay pipeline",
-      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, adapted for BioTek Synergy 2 Gen5 .xlsx exports. Only raw-file parsing differs between the two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical.",
+      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, adapted for BioTek Synergy 2 Gen5 .xlsx exports. Only raw-file parsing differs between the two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical. See examples/example_run/ (BCA, real data) for a runnable demonstration.",
       "programmingLanguage": { "@id": "https://www.r-project.org" },
       "encodingFormat": "text/x-r-source",
       "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_synergy2_endpoint_std_curve.R",
@@ -201,8 +201,8 @@
     {
       "@id": "examples/example_run/",
       "@type": "Dataset",
-      "name": "BCA (absorbance) example run",
-      "description": "Complete, runnable example against fabricated SpectraMax iD3 data: three in-range samples, no extrapolation or smp_blk wells. Includes raw instrument export, exp_metadata CSV, and the expected processed outputs (plate map, summary PDF, levels CSV, analytical performance CSV)."
+      "name": "BCA (absorbance, real data) example run",
+      "description": "Complete, runnable example against real data: a genuine BCA protein assay exported from a BioTek Synergy 2 (2026.06.15), six in-range samples. This is the only example that exercises process_synergy2_endpoint_std_curve.R, and the only one whose sample_dil_final is left to the pipeline's own auto-calculation rather than being set explicitly. Includes raw instrument export, exp_metadata CSV, and the expected processed outputs (plate map, summary PDF, levels CSV, analytical performance CSV)."
     },
     {
       "@id": "examples/example_run_amplexred/",

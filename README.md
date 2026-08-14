@@ -38,7 +38,7 @@ plate_reader_assay/
     ├── Bradford_assay_metadata.csv            # Assay metadata example (Bradford, two-wavelength ratio)
     ├── tGSH_assay_metadata.csv                # Assay metadata example (tGSH, enzymatic recycling kinetics)
     ├── exp_metadata_template.csv             # Blank experiment metadata template
-    ├── example_run/                          # Complete, runnable example (fabricated data)
+    ├── example_run/                          # First example: REAL data, Synergy 2 (only demo of that script)
     │   ├── BCA_example.Rproj
     │   ├── run_example.R                     # Self-contained script — run and inspect
     │   └── experimental_data/
@@ -165,14 +165,16 @@ source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 
 ## Try it
 
-Five complete, self-contained examples are included — three are fabricated runs with realistic but entirely made-up values, and two (`example_run_bradford_legacy/`, `example_run_tgsh_legacy/`) use real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+Five complete, self-contained examples are included — two are fabricated runs with realistic but entirely made-up values, and three (`example_run/`, `example_run_bradford_legacy/`, `example_run_tgsh_legacy/`) use real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+
+`examples/example_run/` is the BCA example, and the only one that actually exercises `process_synergy2_endpoint_std_curve.R` — it's real data, a genuine BCA protein assay exported from a BioTek Synergy 2. It's also the only example whose `sample_dil_final` is left to the pipeline's own `sample_dil * (std_vol / volume)` auto-calculation, since this real export happened to record both the standard and sample well volumes.
 
 ```r
 # Open examples/example_run/BCA_example.Rproj, then:
 source("run_example.R")
 ```
 
-Or from the command line: `Rscript run_example.R` (from inside `examples/example_run/`). This reads the fabricated plate data, fits the standard curve, back-calculates three sample concentrations, and writes plate-map/summary PDFs, a `_levels.csv`, and a `_analytical_performance.csv` to `experimental_data/processed_data/Protein/` — compare against the versions already committed there to confirm the pipeline reproduces the expected output on your machine.
+Or from the command line: `Rscript run_example.R` (from inside `examples/example_run/`). This reads the real plate data, fits the standard curve, back-calculates six sample concentrations, and writes plate-map/summary PDFs, a `_levels.csv`, and a `_analytical_performance.csv` to `experimental_data/processed_data/Protein/` — compare against the versions already committed there to confirm the pipeline reproduces the expected output on your machine.
 
 `examples/example_run_amplexred/` runs the same pipeline against a fabricated Amplex Red H2O2 (fluorescence) assay, and exercises two features the BCA example doesn't:
 
