@@ -36,6 +36,7 @@ plate_reader_assay/
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
     ├── ABTS_assay_metadata.csv                # Assay metadata example (ABTS, two-wavelength subtraction)
     ├── Bradford_assay_metadata.csv            # Assay metadata example (Bradford, two-wavelength ratio)
+    ├── tGSH_assay_metadata.csv                # Assay metadata example (tGSH, enzymatic recycling kinetics)
     ├── exp_metadata_template.csv             # Blank experiment metadata template
     ├── example_run/                          # Complete, runnable example (fabricated data)
     │   ├── BCA_example.Rproj
@@ -55,12 +56,18 @@ plate_reader_assay/
     │   └── experimental_data/
     │       ├── raw_data/                     # Fabricated long-format + plate-format .xlsx
     │       └── processed_data/ABTS/          # Expected outputs (PDFs + levels.csv), both runs
-    └── example_run_bradford_legacy/          # Fourth example: REAL 2024 data, reorganized to plate format
-        ├── BradfordLegacy_example.Rproj
+    ├── example_run_bradford_legacy/          # Fourth example: REAL 2024 data, reorganized to plate format
+    │   ├── BradfordLegacy_example.Rproj
+    │   ├── run_example.R
+    │   └── experimental_data/
+    │       ├── raw_data/                     # Real values, reorganized from the original SpectraMax export
+    │       └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
+    └── example_run_tgsh_legacy/              # Fifth example: REAL 2024 data, reorganized to long format
+        ├── tGSHLegacy_example.Rproj
         ├── run_example.R
         └── experimental_data/
-            ├── raw_data/                     # Real values, reorganized from the original SpectraMax export
-            └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
+            ├── raw_data/                     # Real values, reorganized from the original kinetic-assay export
+            └── processed_data/GSH-total/     # Expected outputs (PDFs + levels.csv)
 ```
 
 ---
@@ -158,7 +165,7 @@ source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 
 ## Try it
 
-Four complete, self-contained examples are included — three are fabricated runs with realistic but entirely made-up values, and one (`example_run_bradford_legacy/`) uses real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+Five complete, self-contained examples are included — three are fabricated runs with realistic but entirely made-up values, and two (`example_run_bradford_legacy/`, `example_run_tgsh_legacy/`) use real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
 
 ```r
 # Open examples/example_run/BCA_example.Rproj, then:
@@ -196,6 +203,15 @@ source("run_example.R")
 ```
 
 Or `Rscript run_example.R` from inside `examples/example_run_bradford_legacy/`; outputs land in `experimental_data/processed_data/Protein/`.
+
+`examples/example_run_tgsh_legacy/` is the second real-data example, this time reorganized into the generic-Excel **long** format (the long-format demo in `example_run_generic_excel/` is fabricated) — a real 2024 total-glutathione (tGSH) enzymatic recycling assay. Its original export omitted the blank wells entirely; rather than leaving them undefined (which would propagate `NaN` through every well's corrected signal — `mean()` of an all-missing subset is `NaN`, not skipped) or silently dropping them, the confirmed real blank reading (0.000) is encoded explicitly.
+
+```r
+# Open examples/example_run_tgsh_legacy/tGSHLegacy_example.Rproj, then:
+source("run_example.R")
+```
+
+Or `Rscript run_example.R` from inside `examples/example_run_tgsh_legacy/`; outputs land in `experimental_data/processed_data/GSH-total/`.
 
 ---
 

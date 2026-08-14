@@ -45,11 +45,13 @@
         { "@id": "examples/AmplexRed_assay_metadata.csv" },
         { "@id": "examples/ABTS_assay_metadata.csv" },
         { "@id": "examples/Bradford_assay_metadata.csv" },
+        { "@id": "examples/tGSH_assay_metadata.csv" },
         { "@id": "examples/exp_metadata_template.csv" },
         { "@id": "examples/example_run/" },
         { "@id": "examples/example_run_amplexred/" },
         { "@id": "examples/example_run_generic_excel/" },
-        { "@id": "examples/example_run_bradford_legacy/" }
+        { "@id": "examples/example_run_bradford_legacy/" },
+        { "@id": "examples/example_run_tgsh_legacy/" }
       ]
     },
     {
@@ -81,7 +83,7 @@
       "@id": "process_generic_excel_endpoint_std_curve.R",
       "@type": ["File", "SoftwareSourceCode"],
       "name": "Generic Excel endpoint assay pipeline",
-      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, but reads a user-prepared .xlsx file instead of an instrument-specific export, for use with any plate reader. Auto-detects a long format (single sheet, columns well/wavelength/signal) or a plate format (one 8x12-grid sheet per wavelength, sheet name = wavelength) from the first sheet's cell A1. Only raw-file parsing differs from the other two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical.",
+      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, but reads a user-prepared .xlsx file instead of an instrument-specific export, for use with any plate reader. Auto-detects a long format (single sheet, columns well/wavelength/signal) or a plate format (one 8x12-grid sheet per wavelength, sheet name = wavelength) from the first sheet's cell A1. Only raw-file parsing differs from the other two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical. See examples/example_run_generic_excel/ (fabricated, both formats), examples/example_run_bradford_legacy/ (real data, plate format), and examples/example_run_tgsh_legacy/ (real data, long format) for runnable demonstrations.",
       "programmingLanguage": { "@id": "https://www.r-project.org" },
       "encodingFormat": "text/x-r-source",
       "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_generic_excel_endpoint_std_curve.R",
@@ -183,6 +185,13 @@
       "encodingFormat": "text/csv"
     },
     {
+      "@id": "examples/tGSH_assay_metadata.csv",
+      "@type": "File",
+      "name": "tGSH assay metadata example",
+      "description": "Single-row CSV defining a total-glutathione (tGSH) enzymatic recycling assay protocol using a kinetic-rate signal (A412, i.e. the enzymatic rate at 412 nm). Adapted from a real 2024 experiment's assay metadata.",
+      "encodingFormat": "text/csv"
+    },
+    {
       "@id": "examples/exp_metadata_template.csv",
       "@type": "File",
       "name": "Blank experiment metadata template",
@@ -212,6 +221,12 @@
       "@type": "Dataset",
       "name": "Bradford (legacy, real data) example run",
       "description": "Runs process_generic_excel_endpoint_std_curve.R against real data from a 2024 Bradford protein assay, reorganized from its original SpectraMax export into the generic-Excel plate format. Unlike every other example in this crate, the values are real, not fabricated. Demonstrates a two-wavelength ratio signal formula (A590/A450) and adapting an older exp_metadata/assay_metadata layout to the current schema without altering recorded values."
+    },
+    {
+      "@id": "examples/example_run_tgsh_legacy/",
+      "@type": "Dataset",
+      "name": "tGSH (legacy, real data) example run",
+      "description": "Runs process_generic_excel_endpoint_std_curve.R against real data from a 2024 total-glutathione enzymatic recycling assay, reorganized into the generic-Excel long format. Real, not fabricated, data (see examples/example_run_bradford_legacy/ for the plate-format counterpart). The original export omitted blank-well readings entirely; the confirmed real value (0.000) is encoded explicitly rather than left undefined."
     }
   ]
 }

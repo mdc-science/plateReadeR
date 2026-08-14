@@ -1,0 +1,2 @@
+var_abbr,var_name,var_short,std_mol_name,std_mol_code,signal_formula,signal_name,signal_expression,ε,ε_unit,assay,kit,kit_ref,manufacturer,color_high,color_low,final_vol,read_type
+tGSH,Total Glutathione,GSH-total,GSH,G4251,A412,A412 rate (per min),bold(Delta * A[412] ~ min^{-1}),14.15,mM-1cm-1,Enzymatic Recycling,,,,royalblue3,gray90,,Absorbance
