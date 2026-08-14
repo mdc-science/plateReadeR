@@ -1,0 +1,150 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "about": { "@id": "./" },
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0" }
+      ]
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "Plate Reader Endpoint Assay Workflow",
+      "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays (BCA, DTNB, ABTS, Amplex Red) from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2), subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
+      "datePublished": "2026-08-14",
+      "license": { "@id": "https://opensource.org/license/mit" },
+      "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "author": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "version": "1.0.0",
+      "keywords": [
+        "plate-reader",
+        "microplate",
+        "colorimetric-assay",
+        "fluorescence-assay",
+        "BCA",
+        "Amplex Red",
+        "standard-curve",
+        "R"
+      ],
+      "mainEntity": { "@id": "process_spectramax_endpoint_std_curve.R" },
+      "hasPart": [
+        { "@id": "process_spectramax_endpoint_std_curve.R" },
+        { "@id": "process_synergy2_endpoint_std_curve.R" },
+        { "@id": "README.md" },
+        { "@id": "CITATION.cff" },
+        { "@id": "LICENSE" },
+        { "@id": "examples/BCA_assay_metadata.csv" },
+        { "@id": "examples/AmplexRed_assay_metadata.csv" },
+        { "@id": "examples/exp_metadata_template.csv" },
+        { "@id": "examples/example_run/" },
+        { "@id": "examples/example_run_amplexred/" }
+      ]
+    },
+    {
+      "@id": "process_spectramax_endpoint_std_curve.R",
+      "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
+      "name": "SpectraMax endpoint assay pipeline",
+      "description": "Parses SpectraMax iD3 SDA endpoint-assay exports (.csv, .xls, or .txt), auto-detecting absorbance vs. fluorescence read mode and the measured wavelength(s). Subtracts blank signal, evaluates the assay's signal formula, fits a linear standard curve, and back-calculates sample concentrations. See examples/example_run/ (BCA, absorbance) and examples/example_run_amplexred/ (Amplex Red H2O2, fluorescence) for runnable demonstrations.",
+      "programmingLanguage": { "@id": "https://www.r-project.org" },
+      "encodingFormat": "text/x-r-source",
+      "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_spectramax_endpoint_std_curve.R",
+      "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "license": { "@id": "https://opensource.org/license/mit" },
+      "version": "1.0.0"
+    },
+    {
+      "@id": "process_synergy2_endpoint_std_curve.R",
+      "@type": ["File", "SoftwareSourceCode"],
+      "name": "BioTek Synergy 2 endpoint assay pipeline",
+      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, adapted for BioTek Synergy 2 Gen5 .xlsx exports. Only raw-file parsing differs between the two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical.",
+      "programmingLanguage": { "@id": "https://www.r-project.org" },
+      "encodingFormat": "text/x-r-source",
+      "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_synergy2_endpoint_std_curve.R",
+      "isBasedOn": { "@id": "process_spectramax_endpoint_std_curve.R" },
+      "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "license": { "@id": "https://opensource.org/license/mit" },
+      "version": "1.0.0"
+    },
+    {
+      "@id": "https://www.r-project.org",
+      "@type": "ComputerLanguage",
+      "name": "R",
+      "alternateName": "R",
+      "url": "https://www.r-project.org",
+      "identifier": { "@id": "https://www.wikidata.org/wiki/Q206904" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-1961-7281",
+      "@type": "Person",
+      "name": "Daniel Moreira",
+      "affiliation": { "@id": "https://ror.org/04wjk1035" }
+    },
+    {
+      "@id": "https://ror.org/04wjk1035",
+      "@type": "Organization",
+      "name": "i3S - Institute for Research and Innovation in Health, University of Porto",
+      "url": "https://www.i3s.up.pt"
+    },
+    {
+      "@id": "https://opensource.org/license/mit",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "url": "https://opensource.org/license/mit"
+    },
+    {
+      "@id": "README.md",
+      "@type": "File",
+      "name": "README",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "CITATION.cff",
+      "@type": "File",
+      "name": "Citation metadata",
+      "encodingFormat": "application/yaml"
+    },
+    {
+      "@id": "LICENSE",
+      "@type": "File",
+      "name": "License text",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "examples/BCA_assay_metadata.csv",
+      "@type": "File",
+      "name": "BCA assay metadata example",
+      "description": "Single-row CSV defining the BCA (protein) assay protocol: signal formula, standard molecule, kit reference, plot colors.",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "examples/AmplexRed_assay_metadata.csv",
+      "@type": "File",
+      "name": "Amplex Red assay metadata example",
+      "description": "Single-row CSV defining the Amplex Red (H2O2, fluorescence) assay protocol.",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "examples/exp_metadata_template.csv",
+      "@type": "File",
+      "name": "Blank experiment metadata template",
+      "description": "Per-well plate layout template (blank/std/sample/smp_blk types, concentrations, dilutions) to copy for a new experiment.",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "examples/example_run/",
+      "@type": "Dataset",
+      "name": "BCA (absorbance) example run",
+      "description": "Complete, runnable example against fabricated SpectraMax iD3 data: three in-range samples, no extrapolation or smp_blk wells. Includes raw instrument export, exp_metadata CSV, and the expected processed outputs (plate map, summary PDF, levels CSV, analytical performance CSV)."
+    },
+    {
+      "@id": "examples/example_run_amplexred/",
+      "@type": "Dataset",
+      "name": "Amplex Red (fluorescence) example run",
+      "description": "Complete, runnable example against fabricated SpectraMax fluorescence data. Demonstrates smp_blk matrix-matched blank wells and extrapolation flagging: one sample's signal is deliberately above the top standard and is back-calculated but flagged extrapolated = TRUE rather than dropped."
+    }
+  ]
+}
