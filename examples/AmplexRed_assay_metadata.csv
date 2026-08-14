@@ -1,0 +1,2 @@
+var_abbr,var_name,var_short,std_mol_name,std_mol_code,signal_formula,signal_name,signal_expression,ε,ε_unit,assay,kit,kit_ref,manufacturer,color_high,color_low,final_vol,read_type
+H2O2,Hydrogen Peroxide,H2O2,H2O2,,A590,Fluorescence (Ex 540 / Em 590 nm),bold(Fluorescence~(Ex~540/Em~590~nm)),,,Amplex Red,Amplex Red Hydrogen Peroxide/Peroxidase Assay Kit,MAK165,Sigma,lightcoral,gray90,100,Fluorescence

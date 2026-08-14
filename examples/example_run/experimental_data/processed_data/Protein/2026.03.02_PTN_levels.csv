@@ -1,0 +1,4 @@
+sample_ID,var,value,value_unit,extrapolated,source
+S001,PTN,3.5006576253372597,mg/mL,FALSE,head
+S002,PTN,5.5060076400136015,mg/mL,FALSE,head
+S003,PTN,7.516452348883962,mg/mL,FALSE,head
