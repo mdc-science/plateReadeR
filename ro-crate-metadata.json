@@ -14,7 +14,7 @@
       "@id": "./",
       "@type": "Dataset",
       "name": "Plate Reader Endpoint Assay Workflow",
-      "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2), subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
+      "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2) or a user-prepared .xlsx file for any other instrument, subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
       "datePublished": "2026-08-14",
       "identifier": [
         { "@id": "https://doi.org/10.5281/zenodo.21933797" },
@@ -23,7 +23,7 @@
       "license": { "@id": "https://opensource.org/license/mit" },
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "author": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "plate-reader",
         "microplate",
@@ -36,15 +36,18 @@
       "hasPart": [
         { "@id": "process_spectramax_endpoint_std_curve.R" },
         { "@id": "process_synergy2_endpoint_std_curve.R" },
+        { "@id": "process_generic_excel_endpoint_std_curve.R" },
         { "@id": "README.md" },
         { "@id": "CITATION.cff" },
         { "@id": "CHANGELOG.md" },
         { "@id": "LICENSE" },
         { "@id": "examples/BCA_assay_metadata.csv" },
         { "@id": "examples/AmplexRed_assay_metadata.csv" },
+        { "@id": "examples/ABTS_assay_metadata.csv" },
         { "@id": "examples/exp_metadata_template.csv" },
         { "@id": "examples/example_run/" },
-        { "@id": "examples/example_run_amplexred/" }
+        { "@id": "examples/example_run_amplexred/" },
+        { "@id": "examples/example_run_generic_excel/" }
       ]
     },
     {
@@ -57,7 +60,7 @@
       "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_spectramax_endpoint_std_curve.R",
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "license": { "@id": "https://opensource.org/license/mit" },
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "@id": "process_synergy2_endpoint_std_curve.R",
@@ -70,7 +73,20 @@
       "isBasedOn": { "@id": "process_spectramax_endpoint_std_curve.R" },
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "license": { "@id": "https://opensource.org/license/mit" },
-      "version": "1.0.0"
+      "version": "1.1.0"
+    },
+    {
+      "@id": "process_generic_excel_endpoint_std_curve.R",
+      "@type": ["File", "SoftwareSourceCode"],
+      "name": "Generic Excel endpoint assay pipeline",
+      "description": "The same pipeline as process_spectramax_endpoint_std_curve.R, but reads a user-prepared .xlsx file instead of an instrument-specific export, for use with any plate reader. Auto-detects a long format (single sheet, columns well/wavelength/signal) or a plate format (one 8x12-grid sheet per wavelength, sheet name = wavelength) from the first sheet's cell A1. Only raw-file parsing differs from the other two scripts; blank correction, signal formula, standard curve, plotting, and outputs are identical.",
+      "programmingLanguage": { "@id": "https://www.r-project.org" },
+      "encodingFormat": "text/x-r-source",
+      "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_generic_excel_endpoint_std_curve.R",
+      "isBasedOn": { "@id": "process_spectramax_endpoint_std_curve.R" },
+      "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "license": { "@id": "https://opensource.org/license/mit" },
+      "version": "1.1.0"
     },
     {
       "@id": "https://www.r-project.org",
@@ -151,6 +167,13 @@
       "encodingFormat": "text/csv"
     },
     {
+      "@id": "examples/ABTS_assay_metadata.csv",
+      "@type": "File",
+      "name": "ABTS assay metadata example",
+      "description": "Single-row CSV defining an ABTS-style antioxidant capacity assay protocol using a two-wavelength signal formula (A412 - A700).",
+      "encodingFormat": "text/csv"
+    },
+    {
       "@id": "examples/exp_metadata_template.csv",
       "@type": "File",
       "name": "Blank experiment metadata template",
@@ -168,6 +191,12 @@
       "@type": "Dataset",
       "name": "Amplex Red (fluorescence) example run",
       "description": "Complete, runnable example against fabricated SpectraMax fluorescence data. Demonstrates smp_blk matrix-matched blank wells and extrapolation flagging: one sample's signal is deliberately above the top standard and is back-calculated but flagged extrapolated = TRUE rather than dropped."
+    },
+    {
+      "@id": "examples/example_run_generic_excel/",
+      "@type": "Dataset",
+      "name": "Generic Excel input example run (both formats)",
+      "description": "Runs process_generic_excel_endpoint_std_curve.R against the same fabricated two-wavelength (A412 - A700) assay data encoded twice: once as a long-format .xlsx and once as a plate-format .xlsx. Asserts both back-calculate to the same sample concentrations, demonstrating the two input formats are equivalent."
     }
   ]
 }

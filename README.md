@@ -13,7 +13,7 @@
 
 A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Given raw instrument output and two metadata files (assay definition + plate layout), the workflow:
 
-1. Parses the raw instrument export (auto-detecting SpectraMax CSV/XLS/TXT or Synergy2 Excel format)
+1. Parses the raw instrument export (auto-detecting SpectraMax CSV/XLS/TXT or Synergy2 Excel format), or a user-prepared `.xlsx` file for any other instrument (see [Generic Excel input](#4-generic-excel-input-any-instrument) below)
 2. Subtracts blank absorbance and computes the configured signal formula (e.g. A562, A412–A700)
 3. Fits a linear standard curve and calculates the calculated Limit of Detection (CLoD) and Limit of Quantification (CLoQ)
 4. Back-calculates analyte concentrations for all sample wells, accounting for dilution factors
@@ -30,9 +30,11 @@ The workflow is sourced into experiment-specific RMarkdown reports. All paths us
 plate_reader_assay/
 ├── process_spectramax_endpoint_std_curve.R   # SpectraMax iD3 (CSV/XLS/TXT exports)
 ├── process_synergy2_endpoint_std_curve.R     # BioTek Synergy 2 (Excel export)
+├── process_generic_excel_endpoint_std_curve.R # Any instrument (user-prepared .xlsx)
 └── examples/
     ├── BCA_assay_metadata.csv                # Assay metadata example (BCA protein assay, absorbance)
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
+    ├── ABTS_assay_metadata.csv                # Assay metadata example (ABTS, two-wavelength formula)
     ├── exp_metadata_template.csv             # Blank experiment metadata template
     ├── example_run/                          # Complete, runnable example (fabricated data)
     │   ├── BCA_example.Rproj
@@ -40,12 +42,18 @@ plate_reader_assay/
     │   └── experimental_data/
     │       ├── raw_data/                     # Fabricated SpectraMax export + plate layout
     │       └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
-    └── example_run_amplexred/                # Second example: fluorescence, smp_blk, extrapolation
-        ├── AmplexRed_example.Rproj
-        ├── run_example.R
+    ├── example_run_amplexred/                # Second example: fluorescence, smp_blk, extrapolation
+    │   ├── AmplexRed_example.Rproj
+    │   ├── run_example.R
+    │   └── experimental_data/
+    │       ├── raw_data/                     # Fabricated fluorescence export + plate layout
+    │       └── processed_data/H2O2/          # Expected outputs (PDFs + levels.csv)
+    └── example_run_generic_excel/            # Third example: user-prepared Excel, both formats
+        ├── GenericExcel_example.Rproj
+        ├── run_example.R                     # Runs both formats, checks they agree
         └── experimental_data/
-            ├── raw_data/                     # Fabricated fluorescence export + plate layout
-            └── processed_data/H2O2/          # Expected outputs (PDFs + levels.csv)
+            ├── raw_data/                     # Fabricated long-format + plate-format .xlsx
+            └── processed_data/ABTS/          # Expected outputs (PDFs + levels.csv), both runs
 ```
 
 ---
@@ -56,6 +64,7 @@ plate_reader_assay/
 
 - **SpectraMax iD3:** SDA software export as `.csv`, `.xls`, or `.txt` (UTF-16LE tab-delimited)
 - **Synergy 2:** Gen5 software export as `.xlsx`
+- **Any other instrument:** a user-prepared `.xlsx` file — see [Generic Excel input](#4-generic-excel-input-any-instrument) below
 
 Placed in `experimental_data/raw_data/` of the experiment folder.
 
@@ -100,6 +109,15 @@ One row per well describing the plate layout. Placed in `experimental_data/raw_d
 
 See `examples/exp_metadata_template.csv` for a complete template.
 
+### 4. Generic Excel input (any instrument)
+
+`process_generic_excel_endpoint_std_curve.R` reads a plain `.xlsx` file instead of an instrument-specific export, so you can copy-paste data from any plate reader's own software. It auto-detects one of two formats from the first sheet's cell **A1**:
+
+- **Long format** (A1 == `"well"`): a single sheet with columns `well`, `wavelength`, `signal` — one row per well per wavelength. Wells can be omitted (treated as empty, same as an unused well on the plate); a single-wavelength assay just repeats the same wavelength on every row.
+- **Plate format** (A1 is anything else): one sheet per wavelength, sheet name = the wavelength (e.g. `562`, `562nm`). Each sheet is an 8×12 grid: row letters A–H down column A, well numbers 1–12 across row 1, signal values in the block between (B2:M9).
+
+Both formats support multi-wavelength assays (e.g. `A412 - A700`) — long format via multiple rows per well, plate format via multiple sheets. See `examples/example_run_generic_excel/` for a runnable example of both, built from the same underlying data (they back-calculate to identical results).
+
 ---
 
 ## Outputs
@@ -127,13 +145,13 @@ assay_datafile <- here("assay_metadata", "BCA_assay_metadata.csv")
 source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 ```
 
-`here()` resolves from your experiment's `.Rproj` root — adjust the relative paths above to wherever you've placed the script and your assay metadata CSV. For the Synergy 2 instrument, replace `process_spectramax_endpoint_std_curve.R` with `process_synergy2_endpoint_std_curve.R`.
+`here()` resolves from your experiment's `.Rproj` root — adjust the relative paths above to wherever you've placed the script and your assay metadata CSV. For the Synergy 2 instrument, replace `process_spectramax_endpoint_std_curve.R` with `process_synergy2_endpoint_std_curve.R`. For any other instrument, use `process_generic_excel_endpoint_std_curve.R` with a `datafile` in one of the two formats described above — no other changes needed, since `exp_datafile` and `assay_datafile` work exactly the same way.
 
 ---
 
 ## Try it
 
-Two complete, self-contained examples are included — fabricated runs with realistic but entirely made-up values (not real experimental data). Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+Three complete, self-contained examples are included — fabricated runs with realistic but entirely made-up values (not real experimental data). Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
 
 ```r
 # Open examples/example_run/BCA_example.Rproj, then:
@@ -154,6 +172,15 @@ source("run_example.R")
 
 Or `Rscript run_example.R` from inside `examples/example_run_amplexred/`; outputs land in `experimental_data/processed_data/H2O2/`.
 
+`examples/example_run_generic_excel/` runs `process_generic_excel_endpoint_std_curve.R` against the *same* fabricated two-wavelength (`A412 - A700`) assay encoded twice — once as a long-format `.xlsx` and once as a plate-format `.xlsx` — and asserts both back-calculate to the same sample concentrations, demonstrating that the two input formats are genuinely equivalent.
+
+```r
+# Open examples/example_run_generic_excel/GenericExcel_example.Rproj, then:
+source("run_example.R")
+```
+
+Or `Rscript run_example.R` from inside `examples/example_run_generic_excel/`; outputs land in `experimental_data/processed_data/ABTS/` (one pair of files per format run).
+
 ---
 
 ## Dependencies
@@ -169,7 +196,7 @@ library(RColorBrewer)
 library(ggpmisc)
 library(ggforce)
 library(ggthemes)
-library(readxl)   # Synergy2 script only
+library(readxl)   # Synergy2 and generic-Excel scripts only
 ```
 
 ---

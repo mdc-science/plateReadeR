@@ -1,0 +1,2 @@
+var_abbr,var_name,var_short,std_mol_name,std_mol_code,signal_formula,signal_name,signal_expression,ε,ε_unit,assay,kit,kit_ref,manufacturer,color_high,color_low,final_vol,read_type
+TAC,Antioxidant Capacity,ABTS,Trolox,,A412 - A700,A412 - A700,bold(A412-A700),,,ABTS,ABTS Radical Cation Decolorization Assay,,,steelblue,mistyrose,200,Absorbance
