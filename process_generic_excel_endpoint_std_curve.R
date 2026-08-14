@@ -488,6 +488,16 @@ ggsave(
 df_plate_signal <- df %>%
   mutate(signal = ifelse(is.na(label) | type == "blank", NA, signal))
 
+# Auto-scale signal labels for readability (avoids 7+ digit numbers for fluorescence)
+signal_mag    <- max(abs(df_plate_signal$signal), na.rm = TRUE)
+label_divisor <- dplyr::case_when(
+  signal_mag >= 1e6 ~ 1e6,
+  signal_mag >= 1e3 ~ 1e3,
+  TRUE              ~ 1
+)
+label_suffix <- if (label_divisor > 1)
+  paste0(" / ", prettyNum(label_divisor, big.mark = ",")) else ""
+
 p_plate_signal <- ggplot(df_plate_signal) +
   geom_circle(
     aes(x0 = col, y0 = row, r = 0.45, fill = signal),
@@ -503,7 +513,9 @@ p_plate_signal <- ggplot(df_plate_signal) +
     aes(
       x = col,
       y = row,
-      label = ifelse(!is.na(label), round(signal, 3), "")
+      label = ifelse(!is.na(label) & !is.na(signal),
+                     formatC(signal / label_divisor, digits = 3, format = "g"),
+                     "")
     ),
     size = 2
   ) +
@@ -519,7 +531,7 @@ p_plate_signal <- ggplot(df_plate_signal) +
   ) +
   labs(
     title    = paste(assay, "assay"),
-    subtitle = paste(exp_date, "-", signal_name),
+    subtitle = paste0(exp_date, " - ", signal_name, label_suffix),
     x        = "Column",
     y        = "Row"
   ) +

@@ -42,7 +42,7 @@ plate_reader_assay/
     │   ├── BCA_example.Rproj
     │   ├── run_example.R                     # Self-contained script — run and inspect
     │   └── experimental_data/
-    │       ├── raw_data/                     # Fabricated SpectraMax export + plate layout
+    │       ├── raw_data/                     # Real Synergy 2 export + plate layout
     │       └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
     ├── example_run_amplexred/                # Second example: fluorescence, smp_blk, extrapolation
     │   ├── AmplexRed_example.Rproj
@@ -62,12 +62,18 @@ plate_reader_assay/
     │   └── experimental_data/
     │       ├── raw_data/                     # Real values, reorganized from the original SpectraMax export
     │       └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
-    └── example_run_tgsh_legacy/              # Fifth example: REAL 2024 data, reorganized to long format
-        ├── tGSHLegacy_example.Rproj
-        ├── run_example.R
+    ├── example_run_tgsh_legacy/              # Fifth example: REAL 2024 data, reorganized to long format
+    │   ├── tGSHLegacy_example.Rproj
+    │   ├── run_example.R
+    │   └── experimental_data/
+    │       ├── raw_data/                     # Real values, reorganized from the original kinetic-assay export
+    │       └── processed_data/GSH-total/     # Expected outputs (PDFs + levels.csv)
+    └── example_run_format_consistency/       # Sixth example: audit — same data, 4 raw formats, 1 result
+        ├── FormatConsistency_example.Rproj
+        ├── run_example.R                     # Runs 7 format/dataset combos, asserts they all agree
         └── experimental_data/
-            ├── raw_data/                     # Real values, reorganized from the original kinetic-assay export
-            └── processed_data/GSH-total/     # Expected outputs (PDFs + levels.csv)
+            ├── raw_data/                     # Same BCA/ABTS data re-encoded per format
+            └── processed_data/{Protein,ABTS}/ # Expected outputs (PDFs + levels.csv) per format run
 ```
 
 ---
@@ -165,7 +171,7 @@ source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 
 ## Try it
 
-Five complete, self-contained examples are included — two are fabricated runs with realistic but entirely made-up values, and three (`example_run/`, `example_run_bradford_legacy/`, `example_run_tgsh_legacy/`) use real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+Six complete, self-contained examples are included — two are fabricated runs with realistic but entirely made-up values, three (`example_run/`, `example_run_bradford_legacy/`, `example_run_tgsh_legacy/`) use real experimental data, and one (`example_run_format_consistency/`) is an audit combining both. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
 
 `examples/example_run/` is the BCA example, and the only one that actually exercises `process_synergy2_endpoint_std_curve.R` — it's real data, a genuine BCA protein assay exported from a BioTek Synergy 2. It's also the only example whose `sample_dil_final` is left to the pipeline's own `sample_dil * (std_vol / volume)` auto-calculation, since this real export happened to record both the standard and sample well volumes.
 
@@ -214,6 +220,15 @@ source("run_example.R")
 ```
 
 Or `Rscript run_example.R` from inside `examples/example_run_tgsh_legacy/`; outputs land in `experimental_data/processed_data/GSH-total/`.
+
+`examples/example_run_format_consistency/` is the audit example: it proves the workflow produces identical back-calculated concentrations no matter which raw-file format the data arrives in, and no matter whether the assay is single- or two-wavelength. Two datasets, each re-encoded into every format with a trustworthy reference: the real single-wavelength BCA data (from `example_run/`) across all **four** formats — Synergy2, SpectraMax, generic-Excel long, generic-Excel plate — and the fabricated two-wavelength ABTS data (from `example_run_generic_excel/`) across **three** — generic-Excel long, generic-Excel plate, SpectraMax. (A two-wavelength Synergy2 leg is deliberately excluded — there's no real multi-wavelength Synergy2 export to check that raw-file layout against, so a synthetic one would only prove the parser agrees with itself, not that it's correct.) The SpectraMax and generic-Excel encodings were built by extracting the exact values already committed in those referenced examples, not independently retyped.
+
+```r
+# Open examples/example_run_format_consistency/FormatConsistency_example.Rproj, then:
+source("run_example.R")
+```
+
+Or `Rscript run_example.R` from inside `examples/example_run_format_consistency/`; it asserts every format agrees and errors if they don't.
 
 ---
 

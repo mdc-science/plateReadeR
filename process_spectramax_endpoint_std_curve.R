@@ -505,7 +505,7 @@ p_plate_signal <- ggplot(df_plate_signal) +
     aes(
       x = col,
       y = row,
-      label = ifelse(!is.na(label),
+      label = ifelse(!is.na(label) & !is.na(signal),
                      formatC(signal / label_divisor, digits = 3, format = "g"),
                      "")
     ),

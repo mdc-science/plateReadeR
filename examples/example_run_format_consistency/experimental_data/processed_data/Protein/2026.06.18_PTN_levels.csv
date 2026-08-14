@@ -1,0 +1,7 @@
+sample_ID,var,value,value_unit,extrapolated,source
+G025,PTN,9.973205827870514,mg/mL,FALSE,whole_body
+G026,PTN,7.765025743694328,mg/mL,FALSE,whole_body
+G027,PTN,10.242907212197375,mg/mL,FALSE,whole_body
+G028,PTN,5.371425957793426,mg/mL,FALSE,whole_body
+G029,PTN,6.011966745569723,mg/mL,FALSE,whole_body
+G030,PTN,6.500800504662162,mg/mL,FALSE,whole_body
