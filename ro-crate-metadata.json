@@ -44,17 +44,19 @@
         { "@id": "examples/BCA_assay_metadata.csv" },
         { "@id": "examples/AmplexRed_assay_metadata.csv" },
         { "@id": "examples/ABTS_assay_metadata.csv" },
+        { "@id": "examples/Bradford_assay_metadata.csv" },
         { "@id": "examples/exp_metadata_template.csv" },
         { "@id": "examples/example_run/" },
         { "@id": "examples/example_run_amplexred/" },
-        { "@id": "examples/example_run_generic_excel/" }
+        { "@id": "examples/example_run_generic_excel/" },
+        { "@id": "examples/example_run_bradford_legacy/" }
       ]
     },
     {
       "@id": "process_spectramax_endpoint_std_curve.R",
       "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
       "name": "SpectraMax endpoint assay pipeline",
-      "description": "Parses SpectraMax iD3 SDA endpoint-assay exports (.csv, .xls, or .txt), auto-detecting absorbance vs. fluorescence read mode and the measured wavelength(s). Subtracts blank signal, evaluates the assay's signal formula, fits a linear standard curve, and back-calculates sample concentrations. See examples/example_run/ (BCA, absorbance) and examples/example_run_amplexred/ (Amplex Red H2O2, fluorescence) for runnable demonstrations.",
+      "description": "Parses SpectraMax iD3 SDA endpoint-assay exports (.csv, .xls, or .txt), auto-detecting absorbance vs. fluorescence read mode and the measured wavelength(s), including multi-wavelength absorbance exports. Subtracts blank signal, evaluates the assay's signal formula, fits a linear standard curve, and back-calculates sample concentrations. See examples/example_run/ (BCA, absorbance), examples/example_run_amplexred/ (Amplex Red H2O2, fluorescence), and examples/example_run_bradford_legacy/ (real two-wavelength Bradford data) for runnable demonstrations.",
       "programmingLanguage": { "@id": "https://www.r-project.org" },
       "encodingFormat": "text/x-r-source",
       "url": "https://github.com/mdc-science/plateReadeR/blob/main/process_spectramax_endpoint_std_curve.R",
@@ -174,6 +176,13 @@
       "encodingFormat": "text/csv"
     },
     {
+      "@id": "examples/Bradford_assay_metadata.csv",
+      "@type": "File",
+      "name": "Bradford assay metadata example",
+      "description": "Single-row CSV defining a Bradford protein assay protocol using a two-wavelength ratio signal formula (A590/A450). Adapted from a real 2024 experiment's assay metadata.",
+      "encodingFormat": "text/csv"
+    },
+    {
       "@id": "examples/exp_metadata_template.csv",
       "@type": "File",
       "name": "Blank experiment metadata template",
@@ -197,6 +206,12 @@
       "@type": "Dataset",
       "name": "Generic Excel input example run (both formats)",
       "description": "Runs process_generic_excel_endpoint_std_curve.R against the same fabricated two-wavelength (A412 - A700) assay data encoded twice: once as a long-format .xlsx and once as a plate-format .xlsx. Asserts both back-calculate to the same sample concentrations, demonstrating the two input formats are equivalent."
+    },
+    {
+      "@id": "examples/example_run_bradford_legacy/",
+      "@type": "Dataset",
+      "name": "Bradford (legacy, real data) example run",
+      "description": "Runs process_generic_excel_endpoint_std_curve.R against real data from a 2024 Bradford protein assay, reorganized from its original SpectraMax export into the generic-Excel plate format. Unlike every other example in this crate, the values are real, not fabricated. Demonstrates a two-wavelength ratio signal formula (A590/A450) and adapting an older exp_metadata/assay_metadata layout to the current schema without altering recorded values."
     }
   ]
 }

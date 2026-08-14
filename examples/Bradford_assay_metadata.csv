@@ -1,0 +1,2 @@
+var_abbr,var_name,var_short,std_mol_name,std_mol_code,signal_formula,signal_name,signal_expression,ε,ε_unit,assay,kit,kit_ref,manufacturer,color_high,color_low,final_vol,read_type
+PTN_TCA,Protein in TCA precipitate,Protein,BSA,A7030,A590/A450,A590/A450 ratio,bold(A[590]/A[450]),,,Bradford,,,,royalblue2,#C8BC79,,Absorbance

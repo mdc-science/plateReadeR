@@ -34,7 +34,8 @@ plate_reader_assay/
 └── examples/
     ├── BCA_assay_metadata.csv                # Assay metadata example (BCA protein assay, absorbance)
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
-    ├── ABTS_assay_metadata.csv                # Assay metadata example (ABTS, two-wavelength formula)
+    ├── ABTS_assay_metadata.csv                # Assay metadata example (ABTS, two-wavelength subtraction)
+    ├── Bradford_assay_metadata.csv            # Assay metadata example (Bradford, two-wavelength ratio)
     ├── exp_metadata_template.csv             # Blank experiment metadata template
     ├── example_run/                          # Complete, runnable example (fabricated data)
     │   ├── BCA_example.Rproj
@@ -48,12 +49,18 @@ plate_reader_assay/
     │   └── experimental_data/
     │       ├── raw_data/                     # Fabricated fluorescence export + plate layout
     │       └── processed_data/H2O2/          # Expected outputs (PDFs + levels.csv)
-    └── example_run_generic_excel/            # Third example: user-prepared Excel, both formats
-        ├── GenericExcel_example.Rproj
-        ├── run_example.R                     # Runs both formats, checks they agree
+    ├── example_run_generic_excel/            # Third example: user-prepared Excel, both formats
+    │   ├── GenericExcel_example.Rproj
+    │   ├── run_example.R                     # Runs both formats, checks they agree
+    │   └── experimental_data/
+    │       ├── raw_data/                     # Fabricated long-format + plate-format .xlsx
+    │       └── processed_data/ABTS/          # Expected outputs (PDFs + levels.csv), both runs
+    └── example_run_bradford_legacy/          # Fourth example: REAL 2024 data, reorganized to plate format
+        ├── BradfordLegacy_example.Rproj
+        ├── run_example.R
         └── experimental_data/
-            ├── raw_data/                     # Fabricated long-format + plate-format .xlsx
-            └── processed_data/ABTS/          # Expected outputs (PDFs + levels.csv), both runs
+            ├── raw_data/                     # Real values, reorganized from the original SpectraMax export
+            └── processed_data/Protein/       # Expected outputs (PDFs + levels.csv)
 ```
 
 ---
@@ -151,7 +158,7 @@ source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 
 ## Try it
 
-Three complete, self-contained examples are included — fabricated runs with realistic but entirely made-up values (not real experimental data). Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
+Four complete, self-contained examples are included — three are fabricated runs with realistic but entirely made-up values, and one (`example_run_bradford_legacy/`) uses real experimental data. Each mirrors the file layout of a real experiment folder (`experimental_data/raw_data/` + `experimental_data/processed_data/`), so together they double as a template for organizing your own experiment folders.
 
 ```r
 # Open examples/example_run/BCA_example.Rproj, then:
@@ -180,6 +187,15 @@ source("run_example.R")
 ```
 
 Or `Rscript run_example.R` from inside `examples/example_run_generic_excel/`; outputs land in `experimental_data/processed_data/ABTS/` (one pair of files per format run).
+
+`examples/example_run_bradford_legacy/` is different from the other three: it's a **real** Bradford protein assay from 2024, not fabricated data. It shows how to take data from an older experiment (or any instrument this workflow doesn't have a dedicated parser for) and reorganize it into the generic-Excel plate format — the 96-well absorbance values were extracted programmatically from the original SpectraMax export (not retyped, to avoid transcription error), and the metadata files were adapted to this repo's current schema without altering any real recorded value; fields that were genuinely never recorded (e.g. well volume, species) are left blank rather than guessed. It also uses a two-wavelength *ratio* formula (`A590/A450`), rather than the subtraction formula (`A412 - A700`) used in the ABTS example.
+
+```r
+# Open examples/example_run_bradford_legacy/BradfordLegacy_example.Rproj, then:
+source("run_example.R")
+```
+
+Or `Rscript run_example.R` from inside `examples/example_run_bradford_legacy/`; outputs land in `experimental_data/processed_data/Protein/`.
 
 ---
 

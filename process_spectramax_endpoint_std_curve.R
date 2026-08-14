@@ -70,20 +70,27 @@ sda_read_mode <- as.character(df_raw_sda[2, 6]) |> trimws()
 is_fluorescence_read <- grepl("^Fluorescence$", sda_read_mode, ignore.case = TRUE)
 
 # Extract the measurement wavelength(s).
-# Absorbance exports store the wavelength at row 2, col 16.
-# Fluorescence exports store a small integer flag (e.g. 1) at col 16 and the emission
-# wavelength at col 17. Use col 16 if its value is a plausible wavelength (≥ 200 nm);
-# otherwise fall back to col 17. This is more robust than relying on the "Fluorescence"
-# string match alone.
-wl16 <- suppressWarnings(as.numeric(trimws(as.character(df_raw_sda[2, 16]))))
-wl_col <- if (!is.na(wl16) && wl16 >= 200) 16L else 17L
+# Absorbance exports store the wavelength(s) at row 2, col 16 — as a single
+# value for one wavelength (e.g. "562") or space-separated for several (e.g.
+# "590 450"). Fluorescence exports store a small integer flag (e.g. "1") at
+# col 16 and the emission wavelength at col 17. Parse col 16 as a
+# whitespace-separated list first (rather than as.numeric()'ing the whole
+# cell, which returns NA — and so silently mis-detects the fallback column —
+# as soon as col 16 holds more than one wavelength); use it if every parsed
+# value is a plausible wavelength (≥ 200 nm), otherwise fall back to col 17.
+parse_wavelengths <- function(x) {
+  x |>
+    as.character() |>
+    trimws() |>
+    str_split("\\s+", simplify = TRUE) |>
+    as.numeric() |>
+    (\(v) v[!is.na(v) & v > 0])()
+}
 
-wavelength_list <- df_raw_sda[2, wl_col] |>
-  as.character() |>
-  trimws() |>
-  str_split("\\s+", simplify = TRUE) |>
-  as.numeric() |>
-  (\(x) x[!is.na(x) & x > 0])()
+wl16_vals <- parse_wavelengths(df_raw_sda[2, 16])
+wl_col <- if (length(wl16_vals) > 0 && all(wl16_vals >= 200)) 16L else 17L
+
+wavelength_list <- if (wl_col == 16L) wl16_vals else parse_wavelengths(df_raw_sda[2, 17])
 
 #### Import assay and experiment metadata ####
 
