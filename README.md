@@ -11,7 +11,7 @@
 
 ## Overview
 
-A metadata-driven R workflow for processing endpoint colorimetric assays from 96-well microplate readers. Given raw instrument output and two metadata files (assay definition + plate layout), the workflow:
+A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Given raw instrument output and two metadata files (assay definition + plate layout), the workflow:
 
 1. Parses the raw instrument export (auto-detecting SpectraMax CSV/XLS/TXT or Synergy2 Excel format)
 2. Subtracts blank absorbance and computes the configured signal formula (e.g. A562, A412–A700)

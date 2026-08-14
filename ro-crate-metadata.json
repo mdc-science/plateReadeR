@@ -14,7 +14,7 @@
       "@id": "./",
       "@type": "Dataset",
       "name": "Plate Reader Endpoint Assay Workflow",
-      "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays (BCA, DTNB, ABTS, Amplex Red) from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2), subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
+      "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2), subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
       "datePublished": "2026-08-14",
       "identifier": [
         { "@id": "https://doi.org/10.5281/zenodo.21933797" },
@@ -29,8 +29,6 @@
         "microplate",
         "colorimetric-assay",
         "fluorescence-assay",
-        "BCA",
-        "Amplex Red",
         "standard-curve",
         "R"
       ],
