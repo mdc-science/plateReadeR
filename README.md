@@ -140,6 +140,24 @@ See `examples/exp_metadata_template.csv` for a complete template.
 
 Both formats support multi-wavelength assays (e.g. `A412 - A700`) — long format via multiple rows per well, plate format via multiple sheets. See `examples/example_run_generic_excel/` for a runnable example of both, built from the same underlying data (they back-calculate to identical results).
 
+### 5. Dilution factors and concentration units
+
+`std_conc` should be the concentration of the standard **as pipetted from its tube** — the dilution-series concentration — not the concentration after it's mixed with reagent in the well. Likewise, `sample_dil` is the dilution already applied to a sample *before* it was loaded (e.g. diluting a tissue homogenate 1:10), not anything about the well. You never need to work out a "final in-well concentration" for either one.
+
+This works because the standard curve isn't really calibrating concentration → signal — it's calibrating *analyte mass delivered into the reaction* → signal, and mass = tube concentration × volume loaded. As long as every well, standard or sample, gets the same reagent/total-reaction volume (true for essentially every BCA/Bradford/DTNB-style protocol), that relationship holds across the whole plate regardless of what volume of standard or sample was pipetted in.
+
+Where volumes differ between standards and samples (a 10 µL standard vs. a 3 µL sample, say), the workflow corrects for it explicitly rather than ignoring it:
+
+```r
+sample_dil_final = sample_dil * (std_vol / volume)
+```
+
+`std_vol` is the volume loaded per well for standards; `volume` is the sample's own loaded volume (both from the `volume` column). `predict(std_curve, ...)` alone gives you "the concentration a standard tube would need to be, loaded at `std_vol`, to produce this signal" — multiplying by `std_vol / volume` rescales that to the sample's actual tube concentration (load less material than the standard's volume, and the sample tube must be proportionally more concentrated for the same signal), then `sample_dil` un-dilutes further back to the original, undiluted material. The result — `value` in `_levels.csv` — is in whatever unit `std_conc_unit` was recorded in, representing the concentration of that original material.
+
+The auto-calculation needs `volume` recorded for *both* the standards and the sample — if either is missing (common with older or hand-transcribed data; see `examples/example_run_bradford_legacy/` and `examples/example_run_tgsh_legacy/`, where the standard and sample volumes respectively weren't recorded), set `sample_dil_final` explicitly instead of leaving it for the auto-calculation to fill in.
+
+The one assumption this all depends on: the *reagent* volume is the same for every well. If your protocol adds a different reagent volume to standard wells than to sample wells, this relationship no longer holds and none of the above applies as-is.
+
 ---
 
 ## Outputs
