@@ -15,7 +15,7 @@
       "@type": "Dataset",
       "name": "Plate Reader Endpoint Assay Workflow",
       "description": "A metadata-driven R workflow for processing endpoint colorimetric and fluorescence assays from 96-well microplate readers. Parses raw instrument exports (SpectraMax iD3 or BioTek Synergy 2) or a user-prepared .xlsx file for any other instrument, subtracts blanks, fits a linear standard curve, back-calculates sample concentrations (flagging out-of-range samples as extrapolated rather than dropping them), and exports plate-map, standard-curve, and sample-value plots and CSVs.",
-      "datePublished": "2026-08-14",
+      "datePublished": "2026-08-17",
       "identifier": [
         { "@id": "https://doi.org/10.5281/zenodo.21933797" },
         { "@id": "https://doi.org/10.5281/zenodo.21933798" },
@@ -24,7 +24,7 @@
       "license": { "@id": "https://opensource.org/license/mit" },
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "author": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "keywords": [
         "plate-reader",
         "microplate",
@@ -38,6 +38,7 @@
         { "@id": "process_spectramax_endpoint_std_curve.R" },
         { "@id": "process_synergy2_endpoint_std_curve.R" },
         { "@id": "process_generic_excel_endpoint_std_curve.R" },
+        { "@id": "quick_preview_plate_layout.R" },
         { "@id": "README.md" },
         { "@id": "CITATION.cff" },
         { "@id": "CHANGELOG.md" },
@@ -93,6 +94,18 @@
       "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
       "license": { "@id": "https://opensource.org/license/mit" },
       "version": "1.1.0"
+    },
+    {
+      "@id": "quick_preview_plate_layout.R",
+      "@type": ["File", "SoftwareSourceCode"],
+      "name": "Plate layout preview script",
+      "description": "Plots the plate layout (well type and label) from an exp_metadata CSV alone, without needing the raw instrument file - a fast way to catch a transcription mistake before running the full pipeline. The legend shows human-readable well-type labels (Blank, Standard, Sample, Sample Blank, Positive Control, etc.) rather than the raw exp_metadata codes; this is display-only and does not alter the underlying type values.",
+      "programmingLanguage": { "@id": "https://www.r-project.org" },
+      "encodingFormat": "text/x-r-source",
+      "url": "https://github.com/mdc-science/plateReadeR/blob/main/quick_preview_plate_layout.R",
+      "creator": [{ "@id": "https://orcid.org/0000-0003-1961-7281" }],
+      "license": { "@id": "https://opensource.org/license/mit" },
+      "version": "1.2.0"
     },
     {
       "@id": "https://www.r-project.org",

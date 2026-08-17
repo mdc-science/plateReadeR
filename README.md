@@ -30,6 +30,7 @@ plate_reader_assay/
 ├── process_spectramax_endpoint_std_curve.R   # SpectraMax iD3 (CSV/XLS/TXT exports)
 ├── process_synergy2_endpoint_std_curve.R     # BioTek Synergy 2 (Excel export)
 ├── process_generic_excel_endpoint_std_curve.R # Any instrument (user-prepared .xlsx)
+├── quick_preview_plate_layout.R              # Visual plate-layout check before running the pipeline
 └── examples/
     ├── BCA_assay_metadata.csv                # Assay metadata example (BCA protein assay, absorbance)
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
@@ -165,6 +166,19 @@ source(here("R_scripts", "process_spectramax_endpoint_std_curve.R"))
 ```
 
 `here()` resolves from your experiment's `.Rproj` root — adjust the relative paths above to wherever you've placed the script and your assay metadata CSV. For the Synergy 2 instrument, replace `process_spectramax_endpoint_std_curve.R` with `process_synergy2_endpoint_std_curve.R`. For any other instrument, use `process_generic_excel_endpoint_std_curve.R` with a `datafile` in one of the two formats described above — no other changes needed, since `exp_datafile` and `assay_datafile` work exactly the same way.
+
+---
+
+## Utility scripts
+
+`quick_preview_plate_layout.R` plots just the plate layout (well type + label) from an `exp_metadata` CSV, without needing the raw instrument file at all — a fast way to catch a transcription mistake (wrong well, duplicate standard, mislabeled sample) before running the full pipeline. Define `exp_datafile` and source it the same way as the main scripts:
+
+```r
+exp_datafile <- "YYYY.MM.DD_BCA_exp_metadata.csv"
+source(here("quick_preview_plate_layout.R"))
+```
+
+The legend relabels well types for readability (`blank` → "Blank", `smp_blk` → "Sample Blank", `ctrl` → "Control", etc.) — this is display-only; the underlying `type` values in your CSV are untouched.
 
 ---
 

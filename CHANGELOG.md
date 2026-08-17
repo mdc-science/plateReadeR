@@ -4,6 +4,11 @@ All notable changes to this workflow are documented here. Versions correspond to
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-08-17
+
+### Added
+- `quick_preview_plate_layout.R` — plots the plate layout (well type + label) from an `exp_metadata` CSV alone, without needing the raw instrument file, so a transcription mistake can be caught before running the full pipeline. Two fixes applied on import: the legend now shows human-readable well-type labels ("Blank", "Standard", "Sample", "Sample Blank", "Positive Control", etc.) instead of the raw codes (`blank`, `std`, `sample`, `smp_blk`, `pos_ctrl`, ...) — display-only, the underlying `type` values are untouched — and a hardcoded absolute path left over from local development was removed (it silently overrode the intended relative `here()`-based read).
+
 ## [1.1.0] - 2026-08-14
 
 DOI: [10.5281/zenodo.21937604](https://doi.org/10.5281/zenodo.21937604) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).
