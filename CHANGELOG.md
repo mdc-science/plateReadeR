@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); ver
 
 ## [1.2.1] - 2026-08-17
 
+DOI: [10.5281/zenodo.21980171](https://doi.org/10.5281/zenodo.21980171) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).
+
 ### Removed
 - `ro-crate-metadata.json` (added in `[1.0.0]`). It existed to support WorkflowHub registration, which was deliberately never pursued (see `[1.0.0]`/`[1.1.0]` discussion) — no other consumer reads it (Zenodo's DOI minting uses the GitHub repo metadata and `CITATION.cff`, not RO-Crate), so it was pure ongoing maintenance overhead (every new script/example needed a matching entity added) with no active use. Citability is unaffected: `CITATION.cff` + the Zenodo DOI remain the source of truth.
 
