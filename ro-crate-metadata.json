@@ -42,6 +42,7 @@
         { "@id": "README.md" },
         { "@id": "CITATION.cff" },
         { "@id": "CHANGELOG.md" },
+        { "@id": "GETTING_STARTED.md" },
         { "@id": "LICENSE" },
         { "@id": "examples/BCA_assay_metadata.csv" },
         { "@id": "examples/AmplexRed_assay_metadata.csv" },
@@ -170,6 +171,13 @@
       "@id": "CHANGELOG.md",
       "@type": "File",
       "name": "Changelog",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "GETTING_STARTED.md",
+      "@type": "File",
+      "name": "Getting started guide",
+      "description": "Install-R/RStudio-through-first-successful-example walkthrough for users with no prior R experience.",
       "encodingFormat": "text/markdown"
     },
     {

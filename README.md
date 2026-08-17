@@ -6,6 +6,8 @@
 **Institution:** i3S – Instituto de Investigação e Inovação em Saúde, Porto, Portugal   
 **Language:** R  
 
+New to R? See [GETTING_STARTED.md](GETTING_STARTED.md) for installing R/RStudio and running your first example from scratch.
+
 ---
 
 ## Overview
