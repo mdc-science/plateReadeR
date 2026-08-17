@@ -245,7 +245,7 @@ library(RColorBrewer)
 library(ggpmisc)
 library(ggforce)
 library(ggthemes)
-library(readxl)   # Synergy2 and generic-Excel scripts only
+library(readxl)
 ```
 
 ---
