@@ -3,7 +3,7 @@ message: "If you use this workflow, please cite it as below."
 title: "Plate Reader Endpoint Assay Workflow"
 type: software
 version: 1.2.2
-date-released: "2026-08-17"
+date-released: "2026-08-18"
 authors:
   - family-names: Moreira
     given-names: Daniel
@@ -11,6 +11,9 @@ authors:
     affiliation: "i3S – Instituto de Investigação e Inovação em Saúde, Porto, Portugal"
 repository-code: "https://github.com/mdc-science/plateReadeR"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21996682"
+    description: "The version-specific DOI for v1.2.2 of this workflow."
   - type: doi
     value: "10.5281/zenodo.21980171"
     description: "The version-specific DOI for v1.2.1 of this workflow."

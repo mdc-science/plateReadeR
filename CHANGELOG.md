@@ -4,7 +4,9 @@ All notable changes to this workflow are documented here. Versions correspond to
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
-## [1.2.2] - 2026-08-17
+## [1.2.2] - 2026-08-18
+
+DOI: [10.5281/zenodo.21996682](https://doi.org/10.5281/zenodo.21996682) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).
 
 ### Added
 - README.md: a new "Dilution factors and concentration units" section explaining what `std_conc` and `sample_dil` are supposed to represent (tube/dilution-series concentrations, not in-well concentrations after reagent is added), why that's correct, and how `sample_dil_final = sample_dil * (std_vol / volume)` reconciles standard and sample wells loaded at different volumes. Prompted by a real question about back-calculation accuracy that wasn't previously answerable from the docs alone — only from reading the R code.
