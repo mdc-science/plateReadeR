@@ -36,7 +36,7 @@ plate_reader_assay/
 └── examples/
     ├── BCA_assay_metadata.csv                # Assay metadata example (BCA protein assay, absorbance)
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
-    ├── ABTS_assay_metadata.csv                # Assay metadata example (ABTS, two-wavelength subtraction)
+    ├── ELISA_assay_metadata.csv               # Assay metadata example (generic ELISA, two-wavelength background correction)
     ├── Bradford_assay_metadata.csv            # Assay metadata example (Bradford, two-wavelength ratio)
     ├── tGSH_assay_metadata.csv                # Assay metadata example (tGSH, enzymatic recycling kinetics)
     ├── exp_metadata_template.csv             # Blank experiment metadata template
@@ -57,7 +57,7 @@ plate_reader_assay/
     │   ├── run_example.R                     # Runs both formats, checks they agree
     │   └── experimental_data/
     │       ├── raw_data/                     # Fabricated long-format + plate-format .xlsx
-    │       └── processed_data/ABTS/          # Expected outputs (PDFs + levels.csv), both runs
+    │       └── processed_data/ELISA/         # Expected outputs (PDFs + levels.csv), both runs
     ├── example_run_bradford_legacy/          # Fourth example: REAL 2024 data, reorganized to plate format
     │   ├── BradfordLegacy_example.Rproj
     │   ├── run_example.R
@@ -74,8 +74,8 @@ plate_reader_assay/
         ├── FormatConsistency_example.Rproj
         ├── run_example.R                     # Runs 7 format/dataset combos, asserts they all agree
         └── experimental_data/
-            ├── raw_data/                     # Same BCA/ABTS data re-encoded per format
-            └── processed_data/{Protein,ABTS}/ # Expected outputs (PDFs + levels.csv) per format run
+            ├── raw_data/                     # Same BCA/ELISA data re-encoded per format
+            └── processed_data/{Protein,ELISA}/ # Expected outputs (PDFs + levels.csv) per format run
 ```
 
 ---
@@ -138,7 +138,7 @@ See `examples/exp_metadata_template.csv` for a complete template.
 - **Long format** (A1 == `"well"`): a single sheet with columns `well`, `wavelength`, `signal` — one row per well per wavelength. Wells can be omitted (treated as empty, same as an unused well on the plate); a single-wavelength assay just repeats the same wavelength on every row.
 - **Plate format** (A1 is anything else): one sheet per wavelength, sheet name = the wavelength (e.g. `562`, `562nm`). Each sheet is an 8×12 grid: row letters A–H down column A, well numbers 1–12 across row 1, signal values in the block between (B2:M9).
 
-Both formats support multi-wavelength assays (e.g. `A412 - A700`) — long format via multiple rows per well, plate format via multiple sheets. See `examples/example_run_generic_excel/` for a runnable example of both, built from the same underlying data (they back-calculate to identical results).
+Both formats support multi-wavelength assays (e.g. `A450 - A570`) — long format via multiple rows per well, plate format via multiple sheets. See `examples/example_run_generic_excel/` for a runnable example of both, built from the same underlying data (they back-calculate to identical results).
 
 ### 5. Dilution factors and concentration units
 
@@ -227,16 +227,16 @@ source("run_example.R")
 
 Or `Rscript run_example.R` from inside `examples/example_run_amplexred/`; outputs land in `experimental_data/processed_data/H2O2/`.
 
-`examples/example_run_generic_excel/` runs `process_generic_excel_endpoint_std_curve.R` against the *same* fabricated two-wavelength (`A412 - A700`) assay encoded twice — once as a long-format `.xlsx` and once as a plate-format `.xlsx` — and asserts both back-calculate to the same sample concentrations, demonstrating that the two input formats are genuinely equivalent.
+`examples/example_run_generic_excel/` runs `process_generic_excel_endpoint_std_curve.R` against the *same* fabricated two-wavelength (`A450 - A570`, a generic ELISA wavelength-correction formula) assay encoded twice — once as a long-format `.xlsx` and once as a plate-format `.xlsx` — and asserts both back-calculate to the same sample concentrations, demonstrating that the two input formats are genuinely equivalent.
 
 ```r
 # Open examples/example_run_generic_excel/GenericExcel_example.Rproj, then:
 source("run_example.R")
 ```
 
-Or `Rscript run_example.R` from inside `examples/example_run_generic_excel/`; outputs land in `experimental_data/processed_data/ABTS/` (one pair of files per format run).
+Or `Rscript run_example.R` from inside `examples/example_run_generic_excel/`; outputs land in `experimental_data/processed_data/ELISA/` (one pair of files per format run).
 
-`examples/example_run_bradford_legacy/` is different from the other three: it's a **real** Bradford protein assay from 2024, not fabricated data. It shows how to take data from an older experiment (or any instrument this workflow doesn't have a dedicated parser for) and reorganize it into the generic-Excel plate format — the 96-well absorbance values were extracted programmatically from the original SpectraMax export (not retyped, to avoid transcription error), and the metadata files were adapted to this repo's current schema without altering any real recorded value; fields that were genuinely never recorded (e.g. well volume, species) are left blank rather than guessed. It also uses a two-wavelength *ratio* formula (`A590/A450`), rather than the subtraction formula (`A412 - A700`) used in the ABTS example.
+`examples/example_run_bradford_legacy/` is different from the other three: it's a **real** Bradford protein assay from 2024, not fabricated data. It shows how to take data from an older experiment (or any instrument this workflow doesn't have a dedicated parser for) and reorganize it into the generic-Excel plate format — the 96-well absorbance values were extracted programmatically from the original SpectraMax export (not retyped, to avoid transcription error), and the metadata files were adapted to this repo's current schema without altering any real recorded value; fields that were genuinely never recorded (e.g. well volume, species) are left blank rather than guessed. It also uses a two-wavelength *ratio* formula (`A590/A450`), rather than the subtraction formula (`A450 - A570`) used in the generic-ELISA example.
 
 ```r
 # Open examples/example_run_bradford_legacy/BradfordLegacy_example.Rproj, then:
@@ -254,7 +254,7 @@ source("run_example.R")
 
 Or `Rscript run_example.R` from inside `examples/example_run_tgsh_legacy/`; outputs land in `experimental_data/processed_data/GSH-total/`.
 
-`examples/example_run_format_consistency/` is the audit example: it proves the workflow produces identical back-calculated concentrations no matter which raw-file format the data arrives in, and no matter whether the assay is single- or two-wavelength. Two datasets, each re-encoded into every format with a trustworthy reference: the real single-wavelength BCA data (from `example_run/`) across all **four** formats — Synergy2, SpectraMax, generic-Excel long, generic-Excel plate — and the fabricated two-wavelength ABTS data (from `example_run_generic_excel/`) across **three** — generic-Excel long, generic-Excel plate, SpectraMax. (A two-wavelength Synergy2 leg is deliberately excluded — there's no real multi-wavelength Synergy2 export to check that raw-file layout against, so a synthetic one would only prove the parser agrees with itself, not that it's correct.) The SpectraMax and generic-Excel encodings were built by extracting the exact values already committed in those referenced examples, not independently retyped.
+`examples/example_run_format_consistency/` is the audit example: it proves the workflow produces identical back-calculated concentrations no matter which raw-file format the data arrives in, and no matter whether the assay is single- or two-wavelength. Two datasets, each re-encoded into every format with a trustworthy reference: the real single-wavelength BCA data (from `example_run/`) across all **four** formats — Synergy2, SpectraMax, generic-Excel long, generic-Excel plate — and the fabricated two-wavelength generic-ELISA data (from `example_run_generic_excel/`) across **three** — generic-Excel long, generic-Excel plate, SpectraMax. (A two-wavelength Synergy2 leg is deliberately excluded — there's no real multi-wavelength Synergy2 export to check that raw-file layout against, so a synthetic one would only prove the parser agrees with itself, not that it's correct.) The SpectraMax and generic-Excel encodings were built by extracting the exact values already committed in those referenced examples, not independently retyped.
 
 ```r
 # Open examples/example_run_format_consistency/FormatConsistency_example.Rproj, then:

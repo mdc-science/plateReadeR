@@ -13,12 +13,13 @@
 #     - 2026.06.17_BCA_generic_long.xlsx    (process_generic_excel_endpoint_std_curve.R, long)
 #     - 2026.06.18_BCA_generic_plate.xlsx   (process_generic_excel_endpoint_std_curve.R, plate)
 #
-#   Dataset B - ABTS, two wavelengths (A412 - A700, subtraction formula).
-#   Fabricated data (the same values committed in
-#   examples/example_run_generic_excel/):
-#     - 2026.06.20_ABTS_generic_long.xlsx   (process_generic_excel_endpoint_std_curve.R, long)
-#     - 2026.06.21_ABTS_generic_plate.xlsx  (process_generic_excel_endpoint_std_curve.R, plate)
-#     - 2026.06.22_ABTS_spectramax.csv      (process_spectramax_endpoint_std_curve.R)
+#   Dataset B - generic ELISA, two wavelengths (A450 - A570, a real
+#   wavelength-correction convention: 450nm analyte signal minus a 570nm
+#   reference read, subtraction formula). Fabricated data (the same values
+#   committed in examples/example_run_generic_excel/):
+#     - 2026.06.20_ELISA_generic_long.xlsx   (process_generic_excel_endpoint_std_curve.R, long)
+#     - 2026.06.21_ELISA_generic_plate.xlsx  (process_generic_excel_endpoint_std_curve.R, plate)
+#     - 2026.06.22_ELISA_spectramax.csv      (process_spectramax_endpoint_std_curve.R)
 #
 # Dataset B deliberately has no Synergy2 leg. A multi-wavelength Synergy2 raw
 # file would have to be constructed purely by reading
@@ -78,22 +79,22 @@ exp_datafile <- "2026.06.18_BCA_exp_metadata.csv"
 source(here("..", "..", "process_generic_excel_endpoint_std_curve.R"))
 results$A_generic_plate <- df_samples_calc_final |> arrange(sample_ID)
 
-#### Dataset B: ABTS, two wavelengths ####
+#### Dataset B: generic ELISA, two wavelengths ####
 
-assay_datafile <- here("..", "ABTS_assay_metadata.csv")
+assay_datafile <- here("..", "ELISA_assay_metadata.csv")
 
-datafile     <- "2026.06.20_ABTS_generic_long.xlsx"
-exp_datafile <- "2026.06.20_ABTS_exp_metadata.csv"
+datafile     <- "2026.06.20_ELISA_generic_long.xlsx"
+exp_datafile <- "2026.06.20_ELISA_exp_metadata.csv"
 source(here("..", "..", "process_generic_excel_endpoint_std_curve.R"))
 results$B_generic_long <- df_samples_calc_final |> arrange(sample_ID)
 
-datafile     <- "2026.06.21_ABTS_generic_plate.xlsx"
-exp_datafile <- "2026.06.21_ABTS_exp_metadata.csv"
+datafile     <- "2026.06.21_ELISA_generic_plate.xlsx"
+exp_datafile <- "2026.06.21_ELISA_exp_metadata.csv"
 source(here("..", "..", "process_generic_excel_endpoint_std_curve.R"))
 results$B_generic_plate <- df_samples_calc_final |> arrange(sample_ID)
 
-datafile     <- "2026.06.22_ABTS_spectramax.csv"
-exp_datafile <- "2026.06.22_ABTS_exp_metadata.csv"
+datafile     <- "2026.06.22_ELISA_spectramax.csv"
+exp_datafile <- "2026.06.22_ELISA_exp_metadata.csv"
 source(here("..", "..", "process_spectramax_endpoint_std_curve.R"))
 results$B_spectramax <- df_samples_calc_final |> arrange(sample_ID)
 
@@ -108,7 +109,7 @@ check_group <- function(label, group_names) {
 }
 
 check_group("Dataset A (BCA, 1 wavelength)", c("A_synergy2", "A_spectramax", "A_generic_long", "A_generic_plate"))
-check_group("Dataset B (ABTS, 2 wavelengths)", c("B_generic_long", "B_generic_plate", "B_spectramax"))
+check_group("Dataset B (generic ELISA, 2 wavelengths)", c("B_generic_long", "B_generic_plate", "B_spectramax"))
 
 print(results$A_synergy2)
 print(results$B_generic_long)

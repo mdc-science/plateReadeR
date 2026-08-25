@@ -10,15 +10,17 @@
 # from any plate reader's own software. It auto-detects one of two formats
 # from the first sheet's cell A1:
 #
-#   - Long format  (2026.06.18_ABTS_long_raw.xlsx):  A1 == "well". A single
+#   - Long format  (2026.06.18_ELISA_long_raw.xlsx):  A1 == "well". A single
 #     sheet with columns well/wavelength/signal, one row per well per
 #     wavelength.
-#   - Plate format (2026.06.19_ABTS_plate_raw.xlsx): A1 is anything else. One
+#   - Plate format (2026.06.19_ELISA_plate_raw.xlsx): A1 is anything else. One
 #     sheet per wavelength (sheet name = the wavelength), each an 8x12 grid
 #     (row letters A-H down column A, wells 1-12 across row 1).
 #
-# Both files encode the *same* fabricated ABTS-style two-wavelength assay
-# (signal_formula = "A412 - A700": a genuine two-wavelength formula, so this
+# Both files encode the *same* fabricated generic-ELISA two-wavelength assay
+# (signal_formula = "A450 - A570": a real ELISA convention where 450nm is the
+# analyte signal and 570nm is a reference read subtracted to correct for
+# plate-optical imperfections — a genuine two-wavelength formula, so this
 # actually exercises multi-wavelength handling in both formats, not just a
 # trivial single-wavelength case) — run both below and compare
 # df_samples_calc_final: they should back-calculate to the same values,
@@ -38,18 +40,18 @@ library(readxl)
 
 conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
 
-assay_datafile <- here("..", "ABTS_assay_metadata.csv")
+assay_datafile <- here("..", "ELISA_assay_metadata.csv")
 
 #### Run 1: long format ####
-datafile     <- "2026.06.18_ABTS_long_raw.xlsx"
-exp_datafile <- "2026.06.18_ABTS_exp_metadata.csv"
+datafile     <- "2026.06.18_ELISA_long_raw.xlsx"
+exp_datafile <- "2026.06.18_ELISA_exp_metadata.csv"
 source(here("..", "..", "process_generic_excel_endpoint_std_curve.R"))
 results_long <- df_samples_calc_final
 print(results_long)
 
 #### Run 2: plate format ####
-datafile     <- "2026.06.19_ABTS_plate_raw.xlsx"
-exp_datafile <- "2026.06.19_ABTS_exp_metadata.csv"
+datafile     <- "2026.06.19_ELISA_plate_raw.xlsx"
+exp_datafile <- "2026.06.19_ELISA_exp_metadata.csv"
 source(here("..", "..", "process_generic_excel_endpoint_std_curve.R"))
 results_plate <- df_samples_calc_final
 print(results_plate)

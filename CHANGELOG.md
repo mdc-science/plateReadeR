@@ -4,6 +4,11 @@ All notable changes to this workflow are documented here. Versions correspond to
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- `examples/ABTS_assay_metadata.csv` renamed to `examples/ELISA_assay_metadata.csv`, and the fabricated two-wavelength dataset in `examples/example_run_generic_excel/` and the "Dataset B" leg of `examples/example_run_format_consistency/` relabeled from `A412 - A700` (attributed to ABTS) to `A450 - A570` (a generic ELISA wavelength-correction assay, `var_short = ELISA`, `var_abbr = AG`). Real ABTS radical-decolorization assays are read at a single wavelength (~734 nm), not via two-wavelength subtraction — the subtraction formula shape was legitimate, but the assay name attached to it wasn't. `A450 - A570` (analyte signal minus a reference read) is a genuine, common ELISA-kit convention, so the underlying fabricated well values needed no changes — the existing positive-slope, roughly-constant-reference-channel shape already fits ELISA correction — only wavelength labels and metadata were relabeled (see CLAUDE.md "What this workflow does" and "Known issues / gotchas" for detail). All affected `run_example.R` scripts were re-run to confirm identical back-calculated concentrations before and after the rename.
+
 ## [1.2.2] - 2026-08-18
 
 DOI: [10.5281/zenodo.21996682](https://doi.org/10.5281/zenodo.21996682) (concept DOI, resolves to latest version: [10.5281/zenodo.21933797](https://doi.org/10.5281/zenodo.21933797)).

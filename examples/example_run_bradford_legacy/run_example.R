@@ -30,7 +30,7 @@
 #
 # The assay's signal_formula (A590/A450) is a genuine two-wavelength RATIO,
 # rather than the subtraction formula used elsewhere in this repo's examples
-# (e.g. ABTS's A412 - A700) - another real-world formula shape this workflow
+# (e.g. the generic-ELISA example's A450 - A570) - another real-world formula shape this workflow
 # supports unmodified.
 
 library(conflicted)
