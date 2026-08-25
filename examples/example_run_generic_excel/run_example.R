@@ -38,7 +38,7 @@ library(ggforce)
 library(ggthemes)
 library(readxl)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+conflicts_prefer(here::here, dplyr::filter)
 
 assay_datafile <- here("..", "ELISA_assay_metadata.csv")
 

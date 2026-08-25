@@ -51,7 +51,7 @@ library(ggforce)
 library(ggthemes)
 library(readxl)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+conflicts_prefer(here::here, dplyr::filter)
 
 results <- list()
 

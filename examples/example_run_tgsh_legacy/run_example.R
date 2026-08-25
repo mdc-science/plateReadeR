@@ -51,7 +51,7 @@ library(ggforce)
 library(ggthemes)
 library(readxl)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+conflicts_prefer(here::here, dplyr::filter)
 
 datafile       <- "2024.11.22_tGSH_long_raw.xlsx"
 exp_datafile   <- "2024.11.22_tGSH_exp_metadata.csv"

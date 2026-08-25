@@ -11,7 +11,14 @@ library(ggforce)
 library(ggthemes)
 library(readxl)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+# NB: prefer ggpp::annotate, NOT ggplot2::annotate — ggpp's version (loaded
+# via ggpmisc) is the one that understands the "text_npc" geom used by the
+# CLoD/CLoQ annotate() calls below. Forcing ggplot2::annotate here silently
+# breaks annotate("text_npc", ...) — no error, the label just never draws —
+# which is why the CLoD/CLoQ text was missing from every rendered std-curve
+# PDF this repo has ever produced. Found and fixed 2026-08-25; see
+# CHANGELOG.md.
+conflicts_prefer(here::here, dplyr::filter, ggpp::annotate)
 
 #### Define utility functions ####
 # Plot linear regression with confidence interval (se = TRUE)

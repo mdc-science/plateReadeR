@@ -31,7 +31,7 @@ library(ggforce)
 library(ggthemes)
 library(readxl)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+conflicts_prefer(here::here, dplyr::filter)
 
 datafile     <- "2026.06.15_BCA_assay_data.xlsx"
 exp_datafile <- "2026.06.15_BCA_exp_metadata.csv"

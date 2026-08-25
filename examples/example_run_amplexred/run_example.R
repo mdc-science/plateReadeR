@@ -31,7 +31,7 @@ library(ggpmisc)
 library(ggforce)
 library(ggthemes)
 
-conflicts_prefer(here::here, dplyr::filter, ggplot2::annotate)
+conflicts_prefer(here::here, dplyr::filter)
 
 datafile     <- "2026.05.10_AmplexRed_assay_data.txt"
 exp_datafile <- "2026.05.10_AmplexRed_exp_metadata.csv"
