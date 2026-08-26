@@ -33,6 +33,7 @@ plate_reader_assay/
 ├── process_synergy2_endpoint_std_curve.R     # BioTek Synergy 2 (Excel export)
 ├── process_generic_excel_endpoint_std_curve.R # Any instrument (user-prepared .xlsx)
 ├── quick_preview_plate_layout.R              # Visual plate-layout check before running the pipeline
+├── quick_preview_signal_intensity.R          # Visual raw-signal check (SpectraMax or generic Excel), no metadata needed
 └── examples/
     ├── BCA_assay_metadata.csv                # Assay metadata example (BCA protein assay, absorbance)
     ├── AmplexRed_assay_metadata.csv           # Assay metadata example (Amplex Red H2O2, fluorescence)
@@ -199,6 +200,20 @@ source(here("quick_preview_plate_layout.R"))
 ```
 
 The legend relabels well types for readability (`blank` → "Blank", `smp_blk` → "Sample Blank", `ctrl` → "Control", etc.) — this is display-only; the underlying `type` values in your CSV are untouched.
+
+`quick_preview_signal_intensity.R` is the complementary check on the other input: it plots raw signal intensity in plate format directly from the instrument export, with **no metadata files at all** — no `exp_datafile`, no `assay_datafile`. Useful for sanity-checking a raw file (did the reader actually read this plate, are the values in a plausible range, which wells look empty) before writing any metadata. One facet per wavelength, or per excitation/emission pair for a SpectraMax fluorescence export with multiple channels. Accepts the same two raw-file families as the main scripts:
+
+- **SpectraMax** SDA export (`.csv`, `.xls`, `.txt`) — same parsing as `process_spectramax_endpoint_std_curve.R`.
+- **Generic long/plate `.xlsx`** — same auto-detection as `process_generic_excel_endpoint_std_curve.R`.
+
+(Not a genuine BioTek Synergy 2 export — only those two formats are supported here.)
+
+```r
+datafile <- "YYYY.MM.DD_raw_export.csv"   # or .xls / .txt / .xlsx
+source(here("quick_preview_signal_intensity.R"))
+```
+
+Writes `experimental_data/processed_data/signal_preview/{today}_signal_intensity.pdf` plus tidy long- and wide-format CSVs of the extracted values — handy for grabbing raw numbers without writing your own parser, independent of running the full pipeline at all.
 
 ---
 
