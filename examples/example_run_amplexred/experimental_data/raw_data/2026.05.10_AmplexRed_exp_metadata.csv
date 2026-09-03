@@ -22,7 +22,7 @@ date,well,label,sample_ID,type,std_conc,std_conc_unit,diluent,volume,sample_dil,
 2026.05.10,G3,STD5,STD,std,8,uM,Reaction Buffer,10,,,,,FALSE
 2026.05.10,A4,S001,S001,sample,,,Reaction Buffer,10,1,,head,tenebrio,FALSE
 2026.05.10,A5,S001,S001,sample,,,Reaction Buffer,10,1,,head,tenebrio,FALSE
-2026.05.10,A6,S001,S001,sample,,,Reaction Buffer,10,1,,head,tenebrio,FALSE
+2026.05.10,A6,S001,S001,sample,,,Reaction Buffer,10,1,,head,tenebrio,TRUE
 2026.05.10,A7,b1,S001,smp_blk,,,Reaction Buffer,10,,,head,tenebrio,FALSE
 2026.05.10,A8,b1,S001,smp_blk,,,Reaction Buffer,10,,,head,tenebrio,FALSE
 2026.05.10,A9,b1,S001,smp_blk,,,Reaction Buffer,10,,,head,tenebrio,FALSE

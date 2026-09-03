@@ -22,7 +22,7 @@ date,well,label,sample_ID,type,std_conc,std_conc_unit,diluent,volume,sample_dil,
 2026.06.19,G3,STD5,STD,std,1.0,mM,buffer,10,,,,,FALSE
 2026.06.19,A4,S001,S001,sample,,,buffer,10,1,,head,tenebrio,FALSE
 2026.06.19,A5,S001,S001,sample,,,buffer,10,1,,head,tenebrio,FALSE
-2026.06.19,A6,S001,S001,sample,,,buffer,10,1,,head,tenebrio,FALSE
+2026.06.19,A6,S001,S001,sample,,,buffer,10,1,,head,tenebrio,TRUE
 2026.06.19,B4,S002,S002,sample,,,buffer,10,1,,head,tenebrio,FALSE
 2026.06.19,B5,S002,S002,sample,,,buffer,10,1,,head,tenebrio,FALSE
 2026.06.19,B6,S002,S002,sample,,,buffer,10,1,,head,tenebrio,FALSE
