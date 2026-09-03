@@ -486,6 +486,10 @@ ggsave(
 df_plate_signal <- df %>%
   mutate(signal = ifelse(is.na(label) | type == "blank", NA, signal))
 
+# Suppressed wells with a displayed value — struck through in the heatmap below
+df_plate_signal_suppressed <- df_plate_signal |>
+  filter(suppress == TRUE, !is.na(signal))
+
 # Auto-scale signal labels for readability (avoids 7+ digit numbers for fluorescence)
 signal_mag    <- max(abs(df_plate_signal$signal), na.rm = TRUE)
 label_divisor <- dplyr::case_when(
@@ -495,6 +499,11 @@ label_divisor <- dplyr::case_when(
 )
 label_suffix <- if (label_divisor > 1)
   paste0(" / ", prettyNum(label_divisor, big.mark = ",")) else ""
+
+# Absorbance reads display fixed 3-decimal labels (0.001 precision) instead of
+# the 3-significant-figure auto-scaled labels used for fluorescence/luminescence —
+# display only, underlying `signal` used for calculations is untouched.
+is_absorbance_read <- !is.na(read_type) & grepl("absorbance", tolower(read_type))
 
 # Create plate plot showing signal intensity per well
 p_plate_signal <- ggplot(df_plate_signal) +
@@ -513,10 +522,16 @@ p_plate_signal <- ggplot(df_plate_signal) +
       x = col,
       y = row,
       label = ifelse(!is.na(label) & !is.na(signal),
-                     formatC(signal / label_divisor, digits = 3, format = "g"),
+                     if (is_absorbance_read) sprintf("%.3f", signal)
+                     else formatC(signal / label_divisor, digits = 3, format = "g"),
                      "")
     ),
     size = 2
+  ) +
+  geom_segment(
+    data = df_plate_signal_suppressed,
+    aes(x = col - 0.35, xend = col + 0.35, y = row, yend = row),
+    color = "red", linewidth = 0.4
   ) +
   scale_x_continuous(
     breaks = 1:12,
